@@ -1,0 +1,45 @@
+<appToolBar [title]="title"></appToolBar>
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="table-responsive pt-3">
+        <table class="table table-striped project-orders-table">
+          <thead>
+            <tr>
+              <th class="ml-5">ID</th>
+              <th colspan="2">Tên người dùng</th>
+              <th></th>
+              <th>Tên đăng nhập</th> 
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th [width]="200">Thao tác</th>
+            </tr>
+          </thead>
+          
+          <tbody *ngFor="let item of datas; index as i">
+            <tr>
+              <td>{{i+1}}</td>
+              <td colspan="2">{{item.firstName + item.lastName}}</td>
+              <td></td>
+              <td>{{item.userName}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.phoneNumber}}</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <button type="button" (click)="onEdit(item)" class="btn btn-warning btn-sm btn-icon-text mr-3">
+                    Edit
+                    <i class="typcn typcn-edit btn-icon-append"></i>                          
+                  </button>
+                  <button type="button" (click)="onDelete(item)" class="btn btn-danger btn-sm btn-icon-text">
+                    Delete
+                    <i class="typcn typcn-delete-outline btn-icon-append"></i>                          
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

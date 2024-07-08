@@ -1,0 +1,75 @@
+<appToolBar [title]="title"></appToolBar>
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Thêm mới người dùng</h4>
+          <form [formGroup]="myForm" class="forms-sample mt-5" novalidate (ngSubmit)="SaveInput()">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">FirstName</label>
+                  <input type="text" formControlName="firstName"  required class="form-control" name="firstName" placeholder="FirstName" [(ngModel)]="inputModel.firstName" >
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('firstName')?.errors?.['required']" style="color: red; font-size: 14px;">FirstName is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">LastName</label>
+                  <input type="text" formControlName="lastName"  required class="form-control" name="lastName" placeholder="LastName" [(ngModel)]="inputModel.lastName" >
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('lastName')?.errors?.['required']" style="color: red; font-size: 14px;">LastName is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">UserName</label>
+                  <input type="text" formControlName="userName"  required class="form-control" name="userName" placeholder="UserName" [(ngModel)]="inputModel.userName" >
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('userName')?.errors?.['required']" style="color: red; font-size: 14px;">UserName is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Email</label>
+                  <input type="text" formControlName="email"  class="form-control" name="email" placeholder="Email" [(ngModel)]="inputModel.email" >
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">PhoneNumber</label>
+                  <input type="text" formControlName="phoneNumber"  class="form-control" name="phoneNumber" placeholder="PhoneNumber" [(ngModel)]="inputModel.phoneNumber" >
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Hình ảnh</label>
+                  <div class="input-group col-xs-12">
+                    <input type="text" value="{{inputModel.imageName}}" readonly class="form-control file-upload-info" placeholder="Tải hình ảnh lên">
+                    <label for="updFileImg" class="file-upload-browse btn btn-primary">
+                      Chọn file
+                    </label>
+                    <input id="updFileImg" formControlName="imageName"  type="file" class="file-upload-default" (change)="onSelectFile($event)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mt-3">
+                <button type="button" (click)="onBack()" class="btn btn-light">Hủy</button>
+                <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+              </div>
+            </div>
+          </form>        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

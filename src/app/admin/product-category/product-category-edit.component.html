@@ -1,0 +1,105 @@
+<appToolBar [title]="title"></appToolBar>
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Thêm mới danh mục</h4>
+          <form  [formGroup]="myForm"  class="forms-sample mt-5" novalidate name="frmAddProductCategory" role="form" (ngSubmit)="SaveInput()">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Tên danh mục</label>
+                  <input type="text" formControlName="name" required class="form-control" id="" name="name" placeholder="Tên danh mục" (keyup)="aliasChange($event)" [(ngModel)]="inputModel.name">
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('name')?.errors?.['required']" style="color: red; font-size: 14px;">Name is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Tiêu đề SEO</label>
+                  <input type="text" formControlName="alias" class="form-control" required id="" name="alias" [(ngModel)]="inputModel.alias" placeholder="Tiêu đề seo">
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('alias')?.errors?.['required']" style="color: red; font-size: 14px;">Alias is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Mô tả ngắn</label>
+                  <input type="text" formControlName="description"  class="form-control" id="" name="description" [(ngModel)]="inputModel.description" placeholder="Mô tả ngắn">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Danh mục cha</label>
+                    <select formControlName="parentID" class="form-control" id="" name="parentID" [(ngModel)]="inputModel.parentID" style="color: black;">
+                        <option value="0">--Danh mục gốc--</option>
+                        <option *ngFor="let opt of listProductCategory"
+                            [value]="opt.id"
+                            [selected]="inputModel.parentID == opt.id"
+                        >
+                        {{opt.name}}
+                        </option>
+                    </select>
+                    <div *ngIf="isShowError" class="mt-2">
+                      <div *ngIf="myForm.get('parentID')?.errors?.['required']" style="color: red; font-size: 14px;">ParentID is required.</div>
+                  </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Thứ tự</label>
+                  <input type="text" formControlName="displayOrder" class="form-control" id="" name="displayOrder" [(ngModel)]="inputModel.displayOrder" placeholder="Thứ tự" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Hình ảnh</label>
+                  <div class="input-group col-xs-12">
+                    <input type="text" id="updFileName" name="image" disabled [value]="inputModel.image" class="form-control file-upload-info" placeholder="Tải hình ảnh lên">
+                    <label for="updFileImg" class="file-upload-browse btn btn-primary">
+                      Chọn file
+                    </label>
+                    <input id="updFileImg" formControlName="image"  type="file" class="file-upload-default"  (change)="onSelectFile($event)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Meta Keyword</label>
+                  <input type="text" formControlName="metaKeyWord" class="form-control" id="" name="metaKeyWord" [(ngModel)]="inputModel.metaKeyWord" placeholder="Meta keyword">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Meta Desc</label>
+                  <textarea formControlName="metaDesc" class="form-control" id="" name="metaDesc" [(ngModel)]="inputModel.metaDesc" placeholder="Meta desc" rows="4"></textarea>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="">
+                  <input type="checkbox" formControlName="status"  name="status" [(ngModel)]="inputModel.status" [checked]="inputModel.status" id="active">
+                  <label style="margin-left:10px" for="active">Kích hoạt</label>
+                </div>
+                <div class="">
+                  <input type="checkbox" formControlName="homeFlag" name="homeFlag" [(ngModel)]="inputModel.homeFlag" [checked]="inputModel.homeFlag" id="showPageMain">
+                  <label style="margin-left:10px" for="showPageMain">Hiển thị trang chủ</label>
+                </div>
+              </div>
+              <div class="col-md-12 mt-3">
+                <button type="button" (click)="onBack()" class="btn btn-light">Hủy</button>
+                <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+              </div>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

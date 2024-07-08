@@ -1,0 +1,20 @@
+<p>client works!</p>
+<a routerLink="clientHome">Nhảy trang</a>
+<button (click)="test()">button</button>
+
+<ckeditor [editor]="Editor" [config]="{ 
+    ckfinder: {
+      uploadUrl: 'https://localhost:44361/api/Auth/login?command=QuickUpload&type=Files&responseType=json'
+    }
+  }"></ckeditor>
+
+<form>
+  <div>
+    <label for="image">Product Image</label>
+      <button type="button" (click)="openCKFinder()">Select Image</button>
+      <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="Product Image" />
+  </div>
+  <button type="submit">Add Product</button>
+</form>
+
+<router-outlet></router-outlet>
