@@ -4,4 +4,5 @@ export class UserResponseModel{
     lastName:string="";
     userName:string="";
     token:string="";
+    tokenRefresh:string="";
 }

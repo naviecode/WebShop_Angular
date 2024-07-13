@@ -75,8 +75,8 @@ export class ProductEditComponent implements IUiAction<ProductModel>, OnInit {
         image: ['',null],
         tags:['',Validators.required],
         status: ['',null],
-        metaKeyWord:['',null],
-        metaDesc:['',null],
+        metaKeyWord:['',Validators.required],
+        metaDesc:['',Validators.required],
         description:['',null],
         homeFlag:['',null],
         hotFlag:['',null]
@@ -95,7 +95,7 @@ export class ProductEditComponent implements IUiAction<ProductModel>, OnInit {
               next:(res:any)=>{
                 if(res.code == 0)
                 {
-                  this.inputModel = res;
+                  this.inputModel = res.data;
                   this.loadingService.hide();
                 }
                 else{
@@ -112,7 +112,7 @@ export class ProductEditComponent implements IUiAction<ProductModel>, OnInit {
       }
   
       //Combobox ProductCategory
-      this.productCategoryService.getAll().subscribe((res:any)=>{
+      this.productCategoryService.getCombobox().subscribe((res:any)=>{
         this.listProductCategory = res.items;
       })    
     } 
@@ -142,6 +142,7 @@ export class ProductEditComponent implements IUiAction<ProductModel>, OnInit {
     }
   
     SaveInput(): void{
+      console.log(this.inputModel)
       if(this.myForm.invalid)
       {
           this.isShowError = true;

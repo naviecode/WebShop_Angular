@@ -8,9 +8,9 @@ export class ProductCategoryModel{
     imageKey: string = "";
     image: string = "";
     homeFlag: boolean = false;
-    createdDate:Date = new Date();
+    createdDate!:Date;
     createdBy: string = "";
-    updatedDate: Date = new Date();
+    updatedDate!: Date;
     updatedBy: string = "";
     metaKeyWord: string = "";
     metaDesc: string = "";

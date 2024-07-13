@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './core/authService/auth.service';
 import { Router } from '@angular/router';
+import { UserResponseModel } from '../model/UserResponse.model';
 
 @Component({
   selector: 'app-admin',
@@ -10,13 +11,18 @@ import { Router } from '@angular/router';
   ]
 })
 export class AdminComponent {
+  
+  user: UserResponseModel;
+
   constructor(private authService : AuthService, private router: Router){
-    
+      this.user = this.authService.currentUserValue;
   }
   
 
   logout(){
     this.authService.logout();
+    
     this.router.navigate(['/login']);
   }
+
 }

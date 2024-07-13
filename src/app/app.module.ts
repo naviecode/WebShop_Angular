@@ -10,7 +10,7 @@ import { ClientRoutingModule } from './client/client-routing.module';
 import { AdminRoutingModule } from './admin/admin-routing.module';
 import { ProductCategoryComponent } from './admin/product-category/product-category-list.component';
 import { ToolBarComponent } from './admin/core/controls/toolbar/toolbar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductCategoryEditComponent } from './admin/product-category/product-category-edit.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductListComponent } from './admin/product/product-list.component';
@@ -22,6 +22,8 @@ import { NotificationComponent } from './admin/core/controls/notification/notifi
 import { LoadingComponent } from './admin/core/controls/loading/loading.component';
 import { UserListComponent } from './admin/user/user-list.component';
 import { UserEditComponent } from './admin/user/user-edit.component';
+import { AuthService } from './admin/core/authService/auth.service';
+import { TokenInterceptor } from './admin/core/tokenInterceptor/token.interceptor';
 
 export function tokenGetter(){
   return localStorage.getItem("token");
@@ -63,7 +65,14 @@ export function tokenGetter(){
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

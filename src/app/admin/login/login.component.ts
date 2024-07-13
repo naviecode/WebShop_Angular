@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/admin/core/authService/auth.service';
+import { LoginModel } from 'src/app/model/Login.model';
 import { UserModel } from 'src/app/model/User.model';
 import { AuthUserService } from 'src/app/service/auth-user-service.service';
 import { LoadingService } from 'src/app/service/loading-service.service';
@@ -12,7 +13,7 @@ import { NotificationService } from 'src/app/service/notification.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  inputModel: UserModel = new UserModel();
+  inputModel: LoginModel = new LoginModel();
     constructor(private authService:AuthService, 
     private router: Router, 
     private authUserService: AuthUserService,
@@ -28,22 +29,22 @@ export class LoginComponent {
     login(){
       this.loadingService.show();
       this.authUserService.login(this.inputModel).subscribe({
-        next:(res:any)=>{
-          if(res.code == 0)
-          {
-            this.authService.login(res.data.token);
-            this.notificationService.showSuccessNoti(res.message, res.attr);
-            this.router.navigate(['/admin']);
+          next:(res:any)=>{
+            if(res.code == 0){
+              this.authService.login(res.data,res.data.token, res.data.refreshToken);
+              this.notificationService.showSuccessNoti(res.message, res.attr);
+              this.router.navigate(['/admin']);
+              this.loadingService.hide();
+            }
+            else{
+              this.notificationService.showErrorNoti(res.message, res.attr);
+            }
+            this.loadingService.hide();
+          },
+          error:(error: any)=>{
+            this.notificationService.showErrorNoti("Lỗi hệ thống", error);
+            this.loadingService.hide();
           }
-          else{
-            this.notificationService.showErrorNoti(res.message, res.attr);
-          }
-          this.loadingService.hide();
-        },
-        error:(error: any)=>{
-          this.notificationService.showErrorNoti("Lỗi hệ thống", error);
-          this.loadingService.hide();
-        }
-      });    
+      });
     }
 }

@@ -2,7 +2,7 @@ export class ProductModel{
     id:number=0;
     name:string="";
     alias:string="";
-    categoryID:number = 0;
+    categoryID!:number;
     image: string = "";
     imageKey: string = "";
     moreImages:string = "";
@@ -14,9 +14,9 @@ export class ProductModel{
     hotFlag!: boolean;
     homeFlag: boolean = false;
     viewCount!: number;
-    createdDate:Date = new Date();
+    createdDate!:Date;
     createdBy: string = "";
-    updatedDate: Date = new Date();
+    updatedDate!: Date;
     updatedBy: string = "";
     metaKeyWord: string = "";
     metaDesc: string = "";

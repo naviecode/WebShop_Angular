@@ -74,7 +74,8 @@ export class ProductListComponent implements IUiAction<ProductModel>, OnInit {
   onSearch(): void {
     this.loadingService.show();
     this.productService.getAll().subscribe((res:any)=>{
-        this.datas = res.Items;
+        this.datas = res.items;
+
         this.loadingService.hide();
     })
   }

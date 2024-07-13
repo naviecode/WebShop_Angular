@@ -71,12 +71,20 @@
                 <div class="form-group">
                   <label for="">Meta Keyword</label>
                   <input type="text" formControlName="metaKeyWord" class="form-control" id="" name="metaKeyWord" [(ngModel)]="inputModel.metaKeyWord" placeholder="Meta keyword">
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('metaKeyWord')?.errors?.['required']" style="color: red; font-size: 14px;">Meta keyword is required.
+                     </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="">Meta Desc</label>
                   <textarea formControlName="metaDesc" class="form-control" id="" name="metaDesc" [(ngModel)]="inputModel.metaDesc" placeholder="Meta desc" rows="4"></textarea>
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('metaDesc')?.errors?.['required']" style="color: red; font-size: 14px;">Meta desc is required.
+                     </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-12">

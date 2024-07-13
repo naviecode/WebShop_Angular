@@ -29,7 +29,7 @@
              <div class="col-md-3">
                 <div class="form-group">
                   <label for="">Danh mục</label>
-                    <select style="color: #333;" (change)="selectedChange($event)" formControlName="categoryID" name="categoryID" required class="form-control" style="color:black;">
+                    <select style="color: #333;" (change)="selectedChange($event)"  class="form-control" style="color:black;">
                         <option value="" hidden>--Chọn danh mục--</option>
                         <option  *ngFor="let opt of listProductCategory"
                             [value]="opt.id"
@@ -38,6 +38,7 @@
                         {{opt.name}}
                         </option>
                     </select>
+                    <input type="number" formControlName="categoryID" name="categoryID" [(ngModel)]="inputModel.categoryID" hidden >
                     <div *ngIf="isShowError" class="mt-2">
                         <div *ngIf="myForm.get('categoryID')?.errors?.['required']" style="color: red; font-size: 14px;">CategoryID is required.</div>
                     </div>
@@ -101,12 +102,20 @@
                 <div class="form-group">
                   <label for="">Meta Keyword</label>
                   <input type="text" formControlName="metaKeyWord" class="form-control" id="" name="metaKeyWord" [(ngModel)]="inputModel.metaKeyWord" placeholder="Meta KeyWord">
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('metaKeyWord')?.errors?.['required']" style="color: red; font-size: 14px;">Meta KeyWord is required.
+                     </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="">Meta Description</label>
                   <textarea class="form-control" formControlName="metaDesc" id="" name="metaDesc" [(ngModel)]="inputModel.metaDesc" rows="4" placeholder="Meta Description"></textarea>
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('metaDesc')?.errors?.['required']" style="color: red; font-size: 14px;">Meta Description is required.
+                     </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">

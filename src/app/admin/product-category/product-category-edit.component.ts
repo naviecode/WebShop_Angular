@@ -56,8 +56,8 @@ export class ProductCategoryEditComponent implements IUiAction<ProductCategoryMo
       description: ['', null],
       parentID: ['', null],
       displayOrder: ['', null],
-      metaKeyWord: ['', null],
-      metaDesc: ['', null],
+      metaKeyWord: ['', Validators.required],
+      metaDesc: ['', Validators.required],
       status: ['',null],
       homeFlag: ['',null],
    });
@@ -101,8 +101,8 @@ export class ProductCategoryEditComponent implements IUiAction<ProductCategoryMo
   SaveInput(): void{
     if(this.myForm.invalid)
     {
-        this.isShowError = true;
-        return;
+      this.isShowError = true;
+      return;
     }
 
     const formData = new FormData();
