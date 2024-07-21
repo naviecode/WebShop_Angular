@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IUiAction } from 'src/app/ultilities/ui-action';
 import { ToolBarComponent } from '../core/controls/toolbar/toolbar.component';
 import { ProductCategoryService } from 'src/app/service/product-category-service.service';
-import { ProductCategoryModel } from 'src/app/model/ProductCategory.model';
-import { NotificationService } from 'src/app/service/notification.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
+import { ProductCategoryModel } from 'src/app/model/ProductCategory/ProductCategory.model';
+import { NotificationService } from 'src/app/admin/core/controls/service/notification.service';
+import { LoadingService } from 'src/app/admin/core/controls/service/loading-service.service';
+import { ProductCategoryRequestModel } from 'src/app/model/ProductCategory/ProductCategoryRequest.model';
 
 @Component({
   selector: 'app-product-category-list',
@@ -13,6 +14,10 @@ import { LoadingService } from 'src/app/service/loading-service.service';
 export class ProductCategoryComponent implements IUiAction<ProductCategoryModel>, OnInit {  
   title: string = "Danh sách danh mục sản phẩm";
   datas: ProductCategoryModel[]=[];
+  inputModel: ProductCategoryRequestModel = new ProductCategoryRequestModel();
+  totalItems!:number;
+  currentPage:number = 1;
+  itemsPerPage:number = 5;
   @ViewChild(ToolBarComponent,{read: ToolBarComponent,static : true}) appToolbar! : ToolBarComponent;
 
   constructor(private productCategoryService: ProductCategoryService,
@@ -30,12 +35,33 @@ export class ProductCategoryComponent implements IUiAction<ProductCategoryModel>
 
   getProductList(){
     this.loadingService.show();
-    this.productCategoryService.getAll().subscribe((res:any)=>{
+    this.productCategoryService.getAllFilter(this.inputModel).subscribe((res:any)=>{
       this.datas = res.items;
+      this.totalItems = res.totalItem;
+      if(Math.ceil(this.totalItems / this.itemsPerPage) < this.currentPage)
+      {
+        this.currentPage = Math.ceil(this.totalItems / this.itemsPerPage);
+      }else{
+        this.currentPage = 1;
+      }
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.datas = this.datas.slice(startIndex, startIndex + this.itemsPerPage);
+
       this.loadingService.hide();
     })
   }
 
+  selectedChange(event: any){
+    this.inputModel.status = event.target.value == 'true' ? true : false;
+  }
+
+  onPageChanged(page: number) {
+    this.currentPage = page;
+    this.getProductList();
+  }
+  onSearch(): void {
+    this.getProductList();
+  }
   onAdd(): void {
      this.appToolbar.navigatePassParam('/admin/productCategoryAdd', null, { });
   }
@@ -63,13 +89,7 @@ export class ProductCategoryComponent implements IUiAction<ProductCategoryModel>
    
   }
   
-  onSearch(): void {
-    this.loadingService.show();
-    this.productCategoryService.getAll().subscribe((res:any)=>{
-      this.loadingService.hide();
-      this.datas = res.items;
-    })
-  }
+ 
   onSave(): void {
     throw new Error('Method not implemented.');
   }

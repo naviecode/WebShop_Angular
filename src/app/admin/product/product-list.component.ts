@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IUiAction } from 'src/app/ultilities/ui-action';
 import { ToolBarComponent } from '../core/controls/toolbar/toolbar.component';
-import { ProductModel } from 'src/app/model/Product.model';
+import { ProductModel } from 'src/app/model/Product/Product.model';
 import { ProductService } from 'src/app/service/product-service.service';
-import { NotificationService } from 'src/app/service/notification.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
+import { NotificationService } from '../core/controls/service/notification.service';
+import { LoadingService } from '../core/controls/service/loading-service.service';
+
 
 @Component({
   selector: 'app-product-list',
@@ -13,6 +14,10 @@ import { LoadingService } from 'src/app/service/loading-service.service';
 export class ProductListComponent implements IUiAction<ProductModel>, OnInit {
   title:string = "Danh sách sản phẩm"
   datas: ProductModel[]=[];
+  inputModel: ProductModel = new ProductModel();
+  totalItems!:number;
+  currentPage:number = 1;
+  itemsPerPage:number = 5;
   @ViewChild(ToolBarComponent,{read: ToolBarComponent,static : true}) appToolbar! : ToolBarComponent;
 
   constructor(private productService: ProductService,
@@ -29,12 +34,27 @@ export class ProductListComponent implements IUiAction<ProductModel>, OnInit {
   } 
   getProductList(){
     this.loadingService.show();
-    this.productService.getAll().subscribe((res:any)=>{
+    this.productService.getAllFilter(this.inputModel).subscribe((res:any)=>{
       this.datas = res.items;
+      this.totalItems = res.totalItem;
+      if(Math.ceil(this.totalItems / this.itemsPerPage) < this.currentPage)
+      {
+        this.currentPage = Math.ceil(this.totalItems / this.itemsPerPage);
+      } else{
+        this.currentPage = 1;
+      }
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      this.datas = this.datas.slice(startIndex, startIndex + this.itemsPerPage);
       this.loadingService.hide();
     })
   }
-
+  onPageChanged(page: number) {
+    this.currentPage = page;
+    this.getProductList();
+  }
+  onSearch(): void {
+    this.getProductList();
+  }
   onAdd(): void {
      this.appToolbar.navigatePassParam('/admin/productAdd', null, { });
   }
@@ -65,20 +85,17 @@ export class ProductListComponent implements IUiAction<ProductModel>, OnInit {
         }
           
       });
-    }
-   
+    } 
   }
+
+  selectedChange(event: any){
+    this.inputModel.status = event.target.value == 'true' ? true : false;
+  }
+
   onSave(): void {
     throw new Error('Method not implemented.');
   }
-  onSearch(): void {
-    this.loadingService.show();
-    this.productService.getAll().subscribe((res:any)=>{
-        this.datas = res.items;
-
-        this.loadingService.hide();
-    })
-  }
+ 
 
   onUpdate(item: ProductModel): void {
     

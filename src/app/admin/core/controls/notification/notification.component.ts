@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NotificationService, NotifyMessage, NotifyType } from 'src/app/service/notification.service';
+import { NotificationService } from 'src/app/admin/core/controls/service/notification.service';
+import { NotifyMessageState } from 'src/app/ultilities/enum/notify-message-state';
 
 @Component({
   selector: 'app-notification',
@@ -15,7 +16,7 @@ export class NotificationComponent implements OnInit {
   constructor(private notificationService: NotificationService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.subscription = this.notificationService.getNotifications().subscribe((notifyMessage: NotifyMessage) => {
+    this.subscription = this.notificationService.getNotifications().subscribe((notifyMessage: NotifyMessageState) => {
       this.message = notifyMessage.message;
       this.type = notifyMessage.type;
       this.title = notifyMessage.title;

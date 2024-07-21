@@ -24,6 +24,11 @@ import { UserListComponent } from './admin/user/user-list.component';
 import { UserEditComponent } from './admin/user/user-edit.component';
 import { AuthService } from './admin/core/authService/auth.service';
 import { TokenInterceptor } from './admin/core/tokenInterceptor/token.interceptor';
+import { RoleListComponent } from './admin/role/role-list.component';
+import { RoleEditComponent } from './admin/role/role-edit.component';
+import { PaginationComponent } from './admin/core/controls/pagination/pagination.component';
+import { MenuComponent } from './admin/menu/menu.component';
+import { LanguageComponent } from './admin/language/language.component';
 
 export function tokenGetter(){
   return localStorage.getItem("token");
@@ -43,7 +48,12 @@ export function tokenGetter(){
     NotificationComponent,
     LoadingComponent,
     UserListComponent,
-    UserEditComponent
+    UserEditComponent,
+    RoleListComponent,
+    RoleEditComponent,
+    PaginationComponent,
+    MenuComponent,
+    LanguageComponent
     ],
   imports: [
     BrowserModule,

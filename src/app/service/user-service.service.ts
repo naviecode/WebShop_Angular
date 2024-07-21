@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import{HttpClient, HttpHeaders} from '@angular/common/http';
-import { UserModel } from '../model/User.model';
+import { UserModel } from '../model/User/User.model';
 import { Observable } from 'rxjs';
+import { UserRequestModel } from '../model/User/UserRequest.model';
+import { RegisterModel } from '../model/Other/Register.model';
 
 
 @Injectable({
@@ -9,15 +11,13 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   private apiUrl = 'https://localhost:44361/api/User';
-  private token = localStorage.getItem("accessToken") ?? "";
-  private headers = new HttpHeaders().set(
-    "Authorization", 
-    this.token
-  );
   constructor(private HttpClient:HttpClient) { }
 
   getAll():Observable<UserModel[]>{    
     return this.HttpClient.get<UserModel[]>(this.apiUrl + "/getAll").pipe();
+  }
+  getAllFilter(filter: UserRequestModel):Observable<UserModel[]>{
+    return this.HttpClient.post<UserModel[]>(this.apiUrl + "/getAllFilter", filter).pipe();
   }
   getById(id: number):Observable<UserModel>{
     return this.HttpClient.get<UserModel>(this.apiUrl + `/getById?id=${id}`).pipe();
@@ -30,6 +30,12 @@ export class UserService {
   }
   delete(id: number):Observable<unknown>{
      return this.HttpClient.delete(this.apiUrl + `/delete?id=${id}`).pipe();
+  }
+  register(data: RegisterModel):Observable<UserModel>{
+    return this.HttpClient.post<UserModel>(this.apiUrl + "/register", data).pipe();
+  }
+  changePassword(data: RegisterModel):Observable<UserModel>{
+    return this.HttpClient.post<UserModel>(this.apiUrl + "/changePassword", data).pipe();
   }
   
 }

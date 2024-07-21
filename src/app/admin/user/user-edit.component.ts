@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserModel } from 'src/app/model/User.model';
+import { UserModel } from 'src/app/model/User/User.model';
 import { IUiAction } from 'src/app/ultilities/ui-action';
 import { EditPageState } from 'src/app/ultilities/enum/edit-page-state';
 
@@ -7,8 +7,10 @@ import { ToolBarComponent } from '../core/controls/toolbar/toolbar.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/service/user-service.service';
-import { NotificationService } from 'src/app/service/notification.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
+import { NotificationService } from 'src/app/admin/core/controls/service/notification.service';
+import { LoadingService } from 'src/app/admin/core/controls/service/loading-service.service';
+import { RoleService } from 'src/app/service/role-service.service copy';
+import { RoleModel } from 'src/app/model/Role/Role.model';
 
 @Component({
   selector: 'app-user-edit',
@@ -21,19 +23,19 @@ export class UserEditComponent implements IUiAction<UserModel>, OnInit {
   EditPageState = EditPageState;
   editPageState:EditPageState;
   activeRoute!: ActivatedRoute;
-  isLoading: boolean = false;
-  loadingTitle: string = "Loading";
   selectedFile!: File;
   fileInfo: any;
   selectedFiles!: FileList;
   isShowError = false;
   listUser:UserModel[] = [];
+  listRole: RoleModel[] = [];
   filterInput: UserModel;
   inputModel: UserModel = new UserModel();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
+    private roleService: RoleService,
     private notificationService: NotificationService, 
     private loadingService: LoadingService,
     private fb: FormBuilder){
@@ -57,8 +59,7 @@ export class UserEditComponent implements IUiAction<UserModel>, OnInit {
       imageName: ['',null],
       imageKey: ['',null],
       email: ['',null],
-      phoneNumber: ['',null],
-      
+      phoneNumber: ['',null]
    });
 
     // set ui action
@@ -67,8 +68,10 @@ export class UserEditComponent implements IUiAction<UserModel>, OnInit {
     switch(this.editPageState)
     {
         case EditPageState.add:
+          this.title = "Thêm mới thông tin người dùng";
           break;
         case EditPageState.edit:
+          this.title = "Điều chỉnh thông tin người dùng";
           this.loadingService.show();
           this.userService.getById(this.inputModel.id).subscribe({
             next:(res:any)=>{
@@ -90,6 +93,12 @@ export class UserEditComponent implements IUiAction<UserModel>, OnInit {
           })      
           break;
     }
+
+
+    //get combobox role
+    this.roleService.getCombobox().subscribe((res:any)=>{
+      this.listRole = res.items;
+    })    
   } 
 
   onBack():void{
@@ -99,9 +108,10 @@ export class UserEditComponent implements IUiAction<UserModel>, OnInit {
   SaveInput(): void{
     if(this.myForm.invalid)
     {
-        this.isShowError = true;
-        return;
+      this.isShowError = true;
+      return;
     }
+    console.log(this.inputModel)
 
     const formData = new FormData();
     formData.append('file', this.selectedFile);
@@ -150,6 +160,10 @@ export class UserEditComponent implements IUiAction<UserModel>, OnInit {
   onSelectFile(event: any) {
     this.selectedFile = event.target.files[0];
     this.inputModel.imageName = event.target.files[0].name;
+  }
+
+  onSelectRoleId(id:number){
+    this.inputModel.roleId = id;
   }
 
   onSave(): void {

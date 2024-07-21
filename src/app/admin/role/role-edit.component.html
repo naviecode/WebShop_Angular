@@ -1,0 +1,68 @@
+<appToolBar [title]="title"></appToolBar>
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Thêm mới quyền</h4>
+          <form  [formGroup]="myForm"  class="forms-sample mt-5" novalidate name="frmAddRole" role="form" (ngSubmit)="SaveInput()">
+            <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Mã quyền</label>
+                    <input type="text" formControlName="name" class="form-control" required id="" name="name" [(ngModel)]="inputModel.name" placeholder="Nhập quyền">
+                    <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('name')?.errors?.['required']" style="color: red; font-size: 14px;">Name is required.
+                        </div>
+                    </div>
+                </div>
+                </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Tên quyền</label>
+                  <input type="text" formControlName="nomalizeName" class="form-control" required id="" name="nomalizeName" [(ngModel)]="inputModel.nomalizeName" placeholder="Nhập tên quyền">
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('nomalizeName')?.errors?.['required']" style="color: red; font-size: 14px;">NomalizeName is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Meta Keyword</label>
+                  <input type="text" formControlName="metaKeyWord" class="form-control" id="" name="metaKeyWord" [(ngModel)]="inputModel.metaKeyWord" placeholder="Meta keyword">
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('metaKeyWord')?.errors?.['required']" style="color: red; font-size: 14px;">Meta keyword is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="">Meta Desc</label>
+                  <textarea formControlName="metaDesc" class="form-control" id="" name="metaDesc" [(ngModel)]="inputModel.metaDesc" placeholder="Meta desc" rows="4"></textarea>
+                  <div *ngIf="isShowError" class="mt-2">
+                    <div *ngIf="myForm.get('metaDesc')?.errors?.['required']" style="color: red; font-size: 14px;">Meta desc is required.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="">
+                  <input type="checkbox" formControlName="status"  name="status" [(ngModel)]="inputModel.status" [checked]="inputModel.status" id="active">
+                  <label style="margin-left:10px" for="active">Kích hoạt</label>
+                </div>
+              </div>
+              <div class="col-md-12 mt-3">
+                <button type="button" (click)="onBack()" class="btn btn-light">Hủy</button>
+                <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+              </div>
+            </div>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

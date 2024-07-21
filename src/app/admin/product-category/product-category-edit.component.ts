@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IUiAction } from 'src/app/ultilities/ui-action';
 import { ToolBarComponent } from '../core/controls/toolbar/toolbar.component';
 import { ProductCategoryService } from 'src/app/service/product-category-service.service';
-import { ProductCategoryModel } from 'src/app/model/ProductCategory.model';
+import { ProductCategoryModel } from 'src/app/model/ProductCategory/ProductCategory.model';
 import { EditPageState } from 'src/app/ultilities/enum/edit-page-state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NotificationService } from 'src/app/service/notification.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
+import { NotificationService } from 'src/app/admin/core/controls/service/notification.service';
+import { LoadingService } from 'src/app/admin/core/controls/service/loading-service.service';
 
 @Component({
   selector: 'app-product-category-edit',

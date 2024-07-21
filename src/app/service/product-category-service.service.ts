@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import{HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { ProductCategoryModel } from '../model/ProductCategory.model';
+import { ProductCategoryModel } from '../model/ProductCategory/ProductCategory.model';
+import { ProductCategoryRequestModel } from '../model/ProductCategory/ProductCategoryRequest.model';
 
-const apiUrl = 'https://localhost:44361/api/ProductCategory';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductCategoryService {
-  private token = localStorage.getItem("accessToken") ?? "";
-  private headers = new HttpHeaders().set(
-    "Authorization", 
-    this.token
-  );
+  private apiUrl = 'https://localhost:44361/api/ProductCategory';
+
   constructor(private HttpClient:HttpClient) { }
 
   getAll():Observable<ProductCategoryModel[]>{
-    return this.HttpClient.get<ProductCategoryModel[]>(apiUrl + "/getAll").pipe();
+    return this.HttpClient.get<ProductCategoryModel[]>(this.apiUrl + "/getAll").pipe();
+  }
+  getAllFilter(filter: ProductCategoryRequestModel):Observable<ProductCategoryModel[]>{
+    return this.HttpClient.post<ProductCategoryModel[]>(this.apiUrl + "/getAllFilter", filter).pipe();
   }
   getCombobox():Observable<ProductCategoryModel[]>{
-    return this.HttpClient.get<ProductCategoryModel[]>(apiUrl + "/getCombobox").pipe();
+    return this.HttpClient.get<ProductCategoryModel[]>(this.apiUrl + "/getCombobox").pipe();
   }
   getById(id: number):Observable<ProductCategoryModel>{
-    return this.HttpClient.get<ProductCategoryModel>(apiUrl + `/getById?id=${id}`).pipe();
+    return this.HttpClient.get<ProductCategoryModel>(this.apiUrl + `/getById?id=${id}`).pipe();
   }
   add(data: FormData):Observable<ProductCategoryModel>{
-    return this.HttpClient.post<ProductCategoryModel>(apiUrl + "/create", data).pipe();
+    return this.HttpClient.post<ProductCategoryModel>(this.apiUrl + "/create", data).pipe();
   }
   update(data: FormData):Observable<ProductCategoryModel>{
-    return this.HttpClient.put<ProductCategoryModel>(apiUrl + "/update",data).pipe();
+    return this.HttpClient.put<ProductCategoryModel>(this.apiUrl + "/update",data).pipe();
   }
   delete(id: number):Observable<unknown>{
-    return this.HttpClient.delete(apiUrl + `/delete?id=${id}`).pipe();
+    return this.HttpClient.delete(this.apiUrl + `/delete?id=${id}`).pipe();
  }
 }

@@ -3,13 +3,13 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Thêm mới người dùng</h4>
+        <h4 class="card-title">{{title}}</h4>
           <form [formGroup]="myForm" class="forms-sample mt-5" novalidate (ngSubmit)="SaveInput()">
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="">FirstName</label>
-                  <input type="text" formControlName="firstName"  required class="form-control" name="firstName" placeholder="FirstName" [(ngModel)]="inputModel.firstName" >
+                  <label for="">Họ</label>
+                  <input type="text" formControlName="firstName"  required class="form-control" name="firstName" placeholder="Nhập họ" [(ngModel)]="inputModel.firstName" >
                   <div *ngIf="isShowError" class="mt-2">
                     <div *ngIf="myForm.get('firstName')?.errors?.['required']" style="color: red; font-size: 14px;">FirstName is required.
                      </div>
@@ -18,8 +18,8 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="">LastName</label>
-                  <input type="text" formControlName="lastName"  required class="form-control" name="lastName" placeholder="LastName" [(ngModel)]="inputModel.lastName" >
+                  <label for="">Tên</label>
+                  <input type="text" formControlName="lastName"  required class="form-control" name="lastName" placeholder="Nhập tên" [(ngModel)]="inputModel.lastName" >
                   <div *ngIf="isShowError" class="mt-2">
                     <div *ngIf="myForm.get('lastName')?.errors?.['required']" style="color: red; font-size: 14px;">LastName is required.
                      </div>
@@ -28,8 +28,8 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="">UserName</label>
-                  <input type="text" formControlName="userName"  required class="form-control" name="userName" placeholder="UserName" [(ngModel)]="inputModel.userName" >
+                  <label for="">Tên đăng nhập</label>
+                  <input type="text" formControlName="userName"  required class="form-control" name="userName" placeholder="Nhập tên đăng nhập" [(ngModel)]="inputModel.userName" >
                   <div *ngIf="isShowError" class="mt-2">
                     <div *ngIf="myForm.get('userName')?.errors?.['required']" style="color: red; font-size: 14px;">UserName is required.
                      </div>
@@ -44,8 +44,8 @@
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  <label for="">PhoneNumber</label>
-                  <input type="text" formControlName="phoneNumber"  class="form-control" name="phoneNumber" placeholder="PhoneNumber" [(ngModel)]="inputModel.phoneNumber" >
+                  <label for="">Số điện thoại</label>
+                  <input type="text" formControlName="phoneNumber"  class="form-control" name="phoneNumber" placeholder="Nhập số điện thoại" [(ngModel)]="inputModel.phoneNumber" >
                 </div>
               </div>
               <div class="col-md-3">
@@ -59,6 +59,22 @@
                     <input id="updFileImg" formControlName="imageName"  type="file" class="file-upload-default" (change)="onSelectFile($event)">
                   </div>
                 </div>
+              </div>
+              <div class="col-md-12" *ngIf="listRole.length > 0">
+                <h3 class="card-title">Danh sách quyền</h3>
+                <div class="row">
+                  <div class="col-md-4" style="display: flex;">
+                    <div class="form-group" *ngFor="let item of listRole; index as i" style="display: flex; align-items: center; margin-left: 15px;">
+                      <input class="form-check-input" type="radio" value="" [id]="item.name" [checked]="inputModel.roleId == item.id" name="roleUser" (change)="onSelectRoleId(item.id)" style="margin: 0 !important; border: 1px solid #ccc !important;">
+                      <label class="form-check-label" [for]="item.name" style="margin-left: 25px;margin-bottom: 0; font-size: 16px;">
+                        {{item.nomalizeName}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                
               </div>
               <div class="col-md-12 mt-3">
                 <button type="button" (click)="onBack()" class="btn btn-light">Hủy</button>

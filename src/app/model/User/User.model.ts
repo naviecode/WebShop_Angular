@@ -4,8 +4,10 @@ export class UserModel{
     lastName:string ="";
     userName:string="";
     passWord:string="";
+    confirmPassWord:string="";
     imageName: string="";
     imageKey: string="";
     email:string="";
     phoneNumber:string = "";
+    roleId:number = 0;
 }

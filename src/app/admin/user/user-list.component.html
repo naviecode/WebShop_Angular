@@ -1,5 +1,15 @@
 <appToolBar [title]="title"></appToolBar>
 <div class="row mt-3">
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <div class="form-group" style="display: flex;align-items: center;justify-content: space-between;">
+        <label style="display: inline-block; width: 30%;">Tên đăng nhập</label>
+        <input style="display: inline-block; width: 65%;border:1px solid #ccc;" type="text"  class="form-control" id=""  [(ngModel)]="inputModel.userName"  name="name"  placeholder="Tên người dùng">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-3" style="height: 450px;">
   <div class="col-md-12">
     <div class="card">
       <div class="table-responsive pt-3">
@@ -26,12 +36,14 @@
               <td>{{item.phoneNumber}}</td>
               <td>
                 <div class="d-flex align-items-center">
+                  <button type="button" data-toggle="modal" data-target="#exampleModal" (click)="onRegister(item)" class="btn btn-info btn-sm btn-icon-text mr-3">Đăng ký</button>
+                  <button type="button" data-toggle="modal" data-target="#exampleModal" (click)="onChangePass(item)" class="btn btn-info btn-sm btn-icon-text mr-3">Đổi mật khẩu</button>
                   <button type="button" (click)="onEdit(item)" class="btn btn-warning btn-sm btn-icon-text mr-3">
-                    Edit
+                    Điều chỉnh
                     <i class="typcn typcn-edit btn-icon-append"></i>                          
                   </button>
                   <button type="button" (click)="onDelete(item)" class="btn btn-danger btn-sm btn-icon-text">
-                    Delete
+                    Xóa
                     <i class="typcn typcn-delete-outline btn-icon-append"></i>                          
                   </button>
                 </div>
@@ -43,3 +55,97 @@
     </div>
   </div>
 </div>
+<div class="row mt-3">
+  <app-pagination
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (pageChanged)="onPageChanged($event)"
+  >
+  </app-pagination>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form [formGroup]="myForm" novalidate (ngSubmit)="submitBoxModal()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{titleBoxModal}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-register" *ngIf="isRegister; else elseBlock">
+            <div class="form-group">
+              <label for="username">Tên đăng nhập</label>
+              <input type="text" class="form-control" id="username" [value]="boxShadowData.userName" disabled >
+            </div>
+            <div class="form-group">
+              <label for="passWord">Mật khẩu</label>
+              <input type="password" class="form-control" id="passWord" formControlName="passWord" autocomplete="on" placeholder="Mật khẩu" [(ngModel)]="boxShadowData.passWord" name="passWord">
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('passWord')?.errors?.['required']" style="color: red; font-size: 14px;">Vui lòng nhập
+                 </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassWord">Xác nhận mật khẩu</label>
+              <input type="password" class="form-control" id="confirmPassWord" formControlName="confirmPassWord" autocomplete="on"   placeholder="Xác nhận mật khẩu" [(ngModel)]="boxShadowData.confirmPassWord" name="confirmPassWord">
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('confirmPassWord')?.errors?.['required']" style="color: red; font-size: 14px;">Vui lòng nhập
+                 </div>
+              </div>
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('confirmPassWord')?.errors?.['mustMatch']" style="color: red; font-size: 14px;">Mật khẩu xác nhận không đúng
+                 </div>
+              </div>
+            </div>
+          </div>
+          <ng-template class="modal-changepass" #elseBlock>
+            <div class="form-group">
+              <label for="username">Tên đăng nhập</label>
+              <input type="text" class="form-control" id="username" [value]="boxShadowData.userName" disabled >
+            </div>
+            <div class="form-group">
+              <label for="passWord">Mật khẩu cũ</label>
+              <input type="password" class="form-control" id="passWord" formControlName="passWord" autocomplete="on" placeholder="Mật khẩu" [(ngModel)]="boxShadowData.passWord" name="passWord">
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('password')?.errors?.['required']" style="color: red; font-size: 14px;">Vui lòng nhập
+                 </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">Mật khẩu mới</label>
+              <input type="password" class="form-control" id="newPassword" formControlName="newPassword" autocomplete="on" placeholder="Mật khẩu mới" [(ngModel)]="boxShadowData.newPassword" name="newPassword">
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('newPassword')?.errors?.['required']" style="color: red; font-size: 14px;">Vui lòng nhập
+                 </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirmNewPassword">Xác nhận mật khẩu</label>
+              <input type="password" class="form-control" id="confirmNewPassword" formControlName="confirmNewPassword" autocomplete="on" placeholder="Xác nhận mật khẩu mới" [(ngModel)]="boxShadowData.confirmNewPassword" name="passWord">
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('confirmNewPassword')?.errors?.['required']" style="color: red; font-size: 14px;">Vui lòng nhập
+                 </div>
+              </div>
+              <div *ngIf="isShowError" class="mt-2">
+                <div *ngIf="myForm.get('confirmNewPassword')?.errors?.['mustMatch']" style="color: red; font-size: 14px;">Mật khẩu xác nhận không đúng
+                 </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          <div>
+            <button *ngIf="isRegister" type="submit" class="btn btn-primary">Đăng ký</button>
+            <button *ngIf="!isRegister" type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

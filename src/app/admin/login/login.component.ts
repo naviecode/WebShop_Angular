@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/admin/core/authService/auth.service';
-import { LoginModel } from 'src/app/model/Login.model';
-import { UserModel } from 'src/app/model/User.model';
+import { LoginModel } from 'src/app/model/Other/Login.model';
+import { UserModel } from 'src/app/model/User/User.model';
 import { AuthUserService } from 'src/app/service/auth-user-service.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
-import { NotificationService } from 'src/app/service/notification.service';
+import { LoadingService } from 'src/app/admin/core/controls/service/loading-service.service';
+import { NotificationService } from 'src/app/admin/core/controls/service/notification.service';
 
 @Component({
   selector: 'app-login',

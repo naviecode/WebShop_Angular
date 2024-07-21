@@ -22,4 +22,6 @@ export class ProductModel{
     metaDesc: string = "";
     status: Boolean = false;
     tags: string = "";
+    fromDate!:Date;
+    toDate!:Date;
 }

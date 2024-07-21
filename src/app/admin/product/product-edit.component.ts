@@ -1,16 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ProductModel } from 'src/app/model/Product.model';
+import { ProductModel } from 'src/app/model/Product/Product.model';
 import { IUiAction } from 'src/app/ultilities/ui-action';
 import { ToolBarComponent } from '../core/controls/toolbar/toolbar.component';
 import { EditPageState } from 'src/app/ultilities/enum/edit-page-state';
 import { ActivatedRoute } from '@angular/router';
-import { ProductCategoryModel } from 'src/app/model/ProductCategory.model';
+import { ProductCategoryModel } from 'src/app/model/ProductCategory/ProductCategory.model';
 import { ProductCategoryService } from 'src/app/service/product-category-service.service';
 import { ProductService } from 'src/app/service/product-service.service';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NotificationService } from 'src/app/service/notification.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
+import { NotificationService } from 'src/app/admin/core/controls/service/notification.service';
+import { LoadingService } from 'src/app/admin/core/controls/service/loading-service.service';
 
 @Component({
   selector: 'app-product-edit',

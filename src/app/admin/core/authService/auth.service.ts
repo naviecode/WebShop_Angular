@@ -4,12 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { error } from 'jquery';
 import { jwtDecode } from "jwt-decode";
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { LoginModel } from 'src/app/model/Login.model';
-import { UserModel } from 'src/app/model/User.model';
-import { UserResponseModel } from 'src/app/model/UserResponse.model';
+import { UserResponseModel } from 'src/app/model/User/UserResponse.model';
 import { AuthUserService } from 'src/app/service/auth-user-service.service';
-import { LoadingService } from 'src/app/service/loading-service.service';
-import { NotificationService } from 'src/app/service/notification.service';
 
 @Injectable({
   providedIn: 'root'

@@ -10,6 +10,10 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './core/authService/auth.guard';
 import { UserListComponent } from './user/user-list.component';
 import { UserEditComponent } from './user/user-edit.component';
+import { RoleListComponent } from './role/role-list.component';
+import { RoleEditComponent } from './role/role-edit.component';
+import { LanguageComponent } from './language/language.component';
+import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent},
@@ -61,7 +65,32 @@ const routes: Routes = [
         path: 'userEdit',
         component: UserEditComponent,
         data:{permission:'Pages.Administration.User.Edit',  editPageState: EditPageState.edit}
-      }
+      },
+      {
+        path: 'role',
+        component: RoleListComponent,
+        data:{permission:'Pages.Administration.Role'}
+      },
+      {
+        path: 'roleAdd',
+        component: RoleEditComponent,
+        data:{permission:'Pages.Administration.Role.Create',  editPageState: EditPageState.add}
+      },
+      {
+        path: 'roleEdit',
+        component: RoleEditComponent,
+        data:{permission:'Pages.Administration.Role.Edit',  editPageState: EditPageState.edit}
+      },
+      {
+        path: 'language',
+        component: LanguageComponent,
+        data:{permission:'Pages.Administration.Language'}
+      },
+      {
+        path: 'menu',
+        component: MenuComponent,
+        data:{permission:'Pages.Administration.Menu'}
+      },
     ],
     canActivate: [AuthGuard]
   }
